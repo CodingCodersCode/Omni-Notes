@@ -117,9 +117,10 @@ dependencies {
     compile 'com.github.federicoiosue:pixlui:2.6'
 }
 
-android.buildTypes.each { type ->
-    type.buildConfigField 'String', 'ANALYTICS_URL', '"' + ANALYTICS_URL + '"'
-    type.buildConfigField 'String', 'CRASH_REPORTING_URL', '"' + CRASH_REPORTING_URL + '"'
-    type.buildConfigField 'String', 'VERSION_CHECK_URL', '"' + VERSION_CHECK_URL + '"'
-    type.buildConfigField 'String', 'MAPS_API_KEY', '"' + MAPS_API_KEY + '"'
+android.productFlavors.each { flavor ->
+    String analyticsUrl = flavor.name == 'foss' && ANALYTICS_URL_FOSS?.trim() ? ANALYTICS_URL_FOSS : ANALYTICS_URL
+    flavor.buildConfigField 'String', 'ANALYTICS_URL', '"' + analyticsUrl + '"'
+    flavor.buildConfigField 'String', 'CRASH_REPORTING_URL', '"' + CRASH_REPORTING_URL + '"'
+    flavor.buildConfigField 'String', 'VERSION_CHECK_URL', '"' + VERSION_CHECK_URL + '"'
+    flavor.buildConfigField 'String', 'MAPS_API_KEY', '"' + MAPS_API_KEY + '"'
 }
